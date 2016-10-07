@@ -14,6 +14,6 @@ ds = Dataset(ncfile, 'r')
 attrs = ds.ncattrs()
 dims = ds.dimensions
 
-for varname in list(ds.variables):
-    var = ds.variables[varname]
-    print "%s: %d" % (varname, var.size)
+for k in ds.variables.keys():
+    globals()[k] = ds.variables[k]
+
