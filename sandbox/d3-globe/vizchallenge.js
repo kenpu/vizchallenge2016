@@ -9,11 +9,15 @@ var path = d3.geo.path().projection(projection);
 
 var svg = d3.select("#main").append("svg").attr("width", width).attr("height", height);
 
+// painting the world
 svg.selectAll("path")
   .data(world.features)
   .enter()
   .append("path")
-  .attr('d', path);
+  .attr('d', path)
+  .attr('fill-opacity', 0.5)
+  .attr('fill', '#78a');
+
 
 
 function rotate() {
