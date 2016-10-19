@@ -1,7 +1,7 @@
-var width = 600, height = 600;
+var width = 1000, height = 1000;
 
 var projection = d3.geo.orthographic()
-    .scale(300)
+    .scale(500)
     .rotate([0, 0, 0])
     .clipAngle(45)
     .translate([width / 2, height / 2 ]);
@@ -12,6 +12,27 @@ var ctx = canvas.node().getContext('2d');
 var path = d3.geo.path().projection(projection).context(ctx);
 
 var globe = {type: 'Sphere'};
+
+canvas.on("mousedown.drag", onMapClick);
+
+// http://stackoverflow.com/questions/15907171/d3-canvas-globe-mouse-events
+function onMapClick() {
+  rotateMap(projection.invert(d3.mouse(this)));
+}
+
+function rotateMap(p) {
+  d3.transition()
+    .duration(850)
+    .tween("rotate", function() {
+        var r = d3.interpolate(projection.rotate(), [-p[0], -p[1]]);
+
+        return function(t) {
+          projection.rotate(r(t));
+          refresh();
+        };
+      })
+    .transition();
+}
 
 refresh();
 
