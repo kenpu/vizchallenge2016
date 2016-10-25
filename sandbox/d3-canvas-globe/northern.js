@@ -15,11 +15,12 @@ var data = [];
 
 console.log(northern.grid);
 northern.grid.forEach(function(point){
-	if(point[2] == NaN){
+	if(!point[2]) {
 		console.log("nope")
-		var size = 20;
+		var size = 1;
 	} else {
-		var size = point[2];
+		var size = point[2]*3;
+		//console.log(size);
 	}
 	data.push({
 		lat: point[1],

@@ -1,7 +1,7 @@
 var width = 1000, height = 1000;
 
 var projection = d3.geo.orthographic()
-    .scale(500)
+    .scale(1000)
     .rotate([0, 0, 0])
     .clipAngle(45)
     .translate([width / 2, height / 2 ]);
@@ -17,7 +17,22 @@ canvas.on("mousedown.drag", onMapClick);
 
 // http://stackoverflow.com/questions/15907171/d3-canvas-globe-mouse-events
 function onMapClick() {
+  console.log("clicked")
   rotateMap(projection.invert(d3.mouse(this)));
+}
+
+canvas.call(d3.behavior.zoom()
+    .scaleExtent([1 / 2, 4])
+    .on("zoom", zoomed));
+
+function zoomed() {
+  ctx.save();
+  console.log(d3.event)
+  ctx.clearRect(0, 0, width, height);
+  ctx.translate(d3.event.translate[0], d3.event.translate[1]);
+  ctx.scale(d3.event.scale, d3.event.scale);
+  refresh()
+  ctx.restore();
 }
 
 function rotateMap(p) {
@@ -33,8 +48,6 @@ function rotateMap(p) {
       })
     .transition();
 }
-
-refresh();
 
 function rotate() {
     var r = projection.rotate();
