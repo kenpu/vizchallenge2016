@@ -25,6 +25,8 @@ def api_data():
     var = request.args.get("var")           # SALT PD ...
     grid = request.args.get('grid') or ""   # U or T
 
+    print ds, z_t, t, var
+    
     z_t = int(z_t)
     t   = int(t)
 
